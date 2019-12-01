@@ -5,10 +5,11 @@
   (Math/max (int 0) (int (- (Math/floor (/ mass 3.0)) 2))))
 
 (defn calculate-fuel2 [mass]
-  (loop [fuel (calculate-fuel1 mass) sum 0]
-    (if (pos? fuel)
-      (recur (calculate-fuel1 fuel) (+ sum fuel))
-      sum)))
+  (loop [mass mass sum 0]
+    (let [increment (calculate-fuel1 mass)]
+      (if (pos? increment)
+        (recur increment (+ sum increment))
+        sum))))
 
 (defn problem1 []
   (with-open [reader (io/reader (io/resource "input1.txt"))]
