@@ -6,17 +6,24 @@
 
 (defonce problems (atom #{}))
 
+(defn filepath->link
+  ([filepath]
+   (let [root (.relativize
+                (.toAbsolutePath (.toPath (io/file "")))
+                (.toAbsolutePath (.toPath (io/file filepath))))]
+     (str "./" root)))
+  ([filepath line-number]
+   (str (filepath->link filepath) "#L" line-number)))
+
 (defmacro defproblem [symbol & body]
-  (let [root (.getAbsolutePath (io/file ""))
-        link (strings/replace *file* root ".")
-        line (str link "#L" (:line (meta &form)))]
+  (let [link (filepath->link *file* (:line (meta &form)))]
     `(let [v# (defn ~symbol []
                 (let [[time# result#]
                       (miss/timing ~@body)
                       explain#
                       (miss/duration-explain
                         (Duration/ofNanos (* 1000 time#)))]
-                  (println (format "### [%s](%s)" (name '~symbol) ~line))
+                  (println (format "### [%s](%s)" (name '~symbol) ~link))
                   (println "```clojure")
                   (println "{:t" (str \" explain# \"))
                   (println " :a" (str (pr-str result#) "}"))
@@ -38,4 +45,15 @@
     ((var-get prob))))
 
 (defn readme []
-  (spit "readme.md" (with-out-str (run-all))))
+  (->> ["## Advent Of Code 2019"
+        \newline
+        "This readme is auto-generated from the execution of my solutions."
+        \newline
+        (let [{:keys [name file line]} (meta #'defproblem)]
+          (format "See [%s](%s)" (clojure.core/name name) (filepath->link file line)))
+        \newline
+        "---"
+        \newline
+        (with-out-str (run-all))]
+       (strings/join \newline)
+       (spit "readme.md")))
