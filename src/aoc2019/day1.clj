@@ -1,5 +1,6 @@
 (ns aoc2019.day1
-  (:require [clojure.java.io :as io]))
+  (:require [aoc2019.common :refer [defproblem run]]
+            [clojure.java.io :as io]))
 
 (defn calculate-fuel1 [mass]
   (int (Math/max (int 0) (int (- (Math/floor (/ mass 3.0)) 2)))))
@@ -11,14 +12,14 @@
         (recur increment (+ sum increment))
         sum))))
 
-(defn problem1 []
+(defproblem d01-p1
   (with-open [reader (io/reader (io/resource "input1.txt"))]
     (->> (line-seq reader)
          (map #(Long/parseLong %))
          (map calculate-fuel1)
          (reduce +))))
 
-(defn problem2 []
+(defproblem d01-p2
   (with-open [reader (io/reader (io/resource "input1.txt"))]
     (->> (line-seq reader)
          (map #(Long/parseLong %))
