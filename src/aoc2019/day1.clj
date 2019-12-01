@@ -10,22 +10,18 @@
       (+ fuel (calculate-fuel2 fuel))
       fuel)))
 
-(defn line-by-line [f]
-  (with-open [reader (io/reader f)]
-    (doall (line-seq reader))))
-
 (defn problem1 []
-  (->> (io/resource "input1.txt")
-       (line-by-line)
-       (map #(Long/parseLong %))
-       (map calculate-fuel1)
-       (reduce +)
-       (int)))
+  (with-open [reader (io/reader (io/resource "input1.txt"))]
+    (->> (line-seq reader)
+         (map #(Long/parseLong %))
+         (map calculate-fuel1)
+         (reduce +)
+         (int))))
 
 (defn problem2 []
-  (->> (io/resource "input1.txt")
-       (line-by-line)
-       (map #(Long/parseLong %))
-       (map calculate-fuel2)
-       (reduce +)
-       (int)))
+  (with-open [reader (io/reader (io/resource "input1.txt"))]
+    (->> (line-seq reader)
+         (map #(Long/parseLong %))
+         (map calculate-fuel2)
+         (reduce +)
+         (int))))
