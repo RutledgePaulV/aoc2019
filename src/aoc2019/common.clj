@@ -8,10 +8,9 @@
 
 (defn filepath->link
   ([filepath]
-   (let [root (.relativize
-                (.toAbsolutePath (.toPath (io/file "")))
-                (.toAbsolutePath (.toPath (io/file filepath))))]
-     (str "./" root)))
+   (str (.relativize
+          (.toAbsolutePath (.toPath (io/file "")))
+          (.toAbsolutePath (.toPath (io/file filepath))))))
   ([filepath line-number]
    (str (filepath->link filepath) "#L" line-number)))
 
@@ -45,7 +44,7 @@
     ((var-get prob))))
 
 (defn readme []
-  (->> ["## Advent Of Code 2019"
+  (->> ["## [Advent Of Code 2019](https://adventofcode.com/2019)"
         \newline
         "This readme is auto-generated from the execution of my solutions."
         \newline
