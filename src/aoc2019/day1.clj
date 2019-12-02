@@ -5,7 +5,7 @@
 (set! *warn-on-reflection* true)
 
 (defn calculate-fuel1 [mass]
-  (int (Math/max (int 0) (int (- (quot mass 3) 2)))))
+  (max (int 0) (int (- (quot mass 3) 2))))
 
 (defn calculate-fuel2 [mass]
   (loop [mass mass sum 0]

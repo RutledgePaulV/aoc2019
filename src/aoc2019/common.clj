@@ -53,6 +53,11 @@
         \newline
         "---"
         \newline
-        (with-out-str (run-all))]
+        (do
+          ;hotspot
+          (dotimes [_ 50]
+            (with-out-str
+              (run-all)))
+          (with-out-str (run-all)))]
        (strings/join \newline)
        (spit "readme.md")))
