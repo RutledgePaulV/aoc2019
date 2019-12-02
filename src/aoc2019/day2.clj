@@ -8,7 +8,7 @@
 
 (defn process [numbers]
   (loop [ticker numbers offset 0]
-    (let [[op reg1 reg2 ret] (drop offset ticker)]
+    (let [[op reg1 reg2 ret] (mapv ticker (range offset (+ 4 offset)))]
       (case op
         1 (recur (assoc ticker ret
                    (+ (get ticker reg1)
