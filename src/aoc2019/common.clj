@@ -21,7 +21,7 @@
                       (miss/timing ~@body)
                       explain#
                       (miss/duration-explain
-                        (Duration/ofNanos (* 1000 time#)))]
+                        (Duration/ofNanos (* 1000000 time#)))]
                   (println (format "### [%s](%s)" (name '~symbol) ~link))
                   (println "```clojure")
                   (println "{:t" (str \" explain# \"))
