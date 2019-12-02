@@ -2,14 +2,16 @@
   (:require [aoc2019.common :refer [defproblem run]]
             [clojure.java.io :as io]))
 
+(set! *warn-on-reflection* true)
+
 (defn calculate-fuel1 [mass]
-  (int (Math/max (int 0) (int (- (Math/floor (/ mass 3.0)) 2)))))
+  (int (Math/max (int 0) (int (- (quot mass 3) 2)))))
 
 (defn calculate-fuel2 [mass]
   (loop [mass mass sum 0]
     (let [increment (calculate-fuel1 mass)]
       (if (pos? increment)
-        (recur increment (+ sum increment))
+        (recur increment (long (+ sum increment)))
         sum))))
 
 (defproblem d01-p1

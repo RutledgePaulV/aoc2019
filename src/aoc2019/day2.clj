@@ -3,18 +3,16 @@
             [clojure.java.io :as io]
             [clojure.string :as strings]))
 
+(set! *warn-on-reflection* true)
+
 (defn process [ticker]
   (loop [ticker ticker offset 0]
-    (let [[op reg1 reg2 ret] (mapv ticker (range offset (+ 4 offset)))]
-      (case op
-        1 (recur (assoc ticker ret
-                   (+ (get ticker reg1)
-                      (get ticker reg2)))
-                 (+ offset 4))
-        2 (recur (assoc ticker ret
-                   (* (get ticker reg1)
-                      (get ticker reg2)))
-                 (+ offset 4))
+    (let [limit (+ 4 offset)
+          [op reg1 reg2 ret]
+          (mapv ticker (range offset limit))]
+      (case (int op)
+        1 (recur (assoc ticker ret (+ (ticker reg1) (ticker reg2))) limit)
+        2 (recur (assoc ticker ret (* (ticker reg1) (ticker reg2))) limit)
         99 ticker))))
 
 (defn get-tape []
@@ -23,8 +21,7 @@
 
 (defn attempt [tape in1 in2]
   (-> tape
-      (assoc 1 in1)
-      (assoc 2 in2)
+      (assoc 1 in1 2 in2)
       (process)
       (get 0)))
 
@@ -36,7 +33,7 @@
 
 (defproblem d02-p2
   (let [tape   (get-tape)
-        search (range 100)]
+        search (into [] (range 100))]
     (loop [[[x y] & remainder] (combos search search)]
       (if (= 19690720 (attempt tape x y))
         (+ (* 100 x) y)
