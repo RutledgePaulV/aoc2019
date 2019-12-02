@@ -1,13 +1,10 @@
 (ns aoc2019.day2
   (:require [aoc2019.common :refer [defproblem run]]
             [clojure.java.io :as io]
-            [clojure.string :as strings]
-            [missing.core :as miss]))
+            [clojure.string :as strings]))
 
-
-
-(defn process [numbers]
-  (loop [ticker numbers offset 0]
+(defn process [ticker]
+  (loop [ticker ticker offset 0]
     (let [[op reg1 reg2 ret] (mapv ticker (range offset (+ 4 offset)))]
       (case op
         1 (recur (assoc ticker ret
@@ -31,12 +28,15 @@
       (process)
       (get 0)))
 
+(defn combos [xs ys]
+  (for [x xs y ys] [x y]))
+
 (defproblem d02-p1
   (attempt (get-tape) 12 2))
 
 (defproblem d02-p2
   (let [tape (get-tape)]
-    (miss/preemptable
-      (doseq [x (range 100) y (range 100)]
-        (when (= 19690720 (attempt tape x y))
-          (miss/preempt (+ (* 100 x) y)))))))
+    (loop [[[x y] & remainder] (combos (range 100) (range 100))]
+      (if (= 19690720 (attempt tape x y))
+        (+ (* 100 x) y)
+        (recur remainder)))))
