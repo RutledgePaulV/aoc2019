@@ -35,8 +35,9 @@
   (attempt (get-tape) 12 2))
 
 (defproblem d02-p2
-  (let [tape (get-tape)]
-    (loop [[[x y] & remainder] (combos (range 100) (range 100))]
+  (let [tape   (get-tape)
+        search (range 100)]
+    (loop [[[x y] & remainder] (combos search search)]
       (if (= 19690720 (attempt tape x y))
         (+ (* 100 x) y)
         (recur remainder)))))
