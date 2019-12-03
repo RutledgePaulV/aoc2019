@@ -55,7 +55,7 @@
         \newline
         (do
           ;hotspot
-          (dotimes [_ 50]
+          (dotimes [_ 25]
             (with-out-str
               (run-all)))
           (with-out-str (run-all)))]
