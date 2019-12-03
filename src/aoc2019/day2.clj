@@ -8,8 +8,7 @@
 (defn process [ticker]
   (loop [ticker ticker offset 0]
     (let [limit (+ 4 offset)
-          [op reg1 reg2 ret]
-          (mapv ticker (range offset limit))]
+          [op reg1 reg2 ret] (subvec ticker offset limit)]
       (case (int op)
         1 (recur (assoc ticker ret (+ (ticker reg1) (ticker reg2))) limit)
         2 (recur (assoc ticker ret (* (ticker reg1) (ticker reg2))) limit)

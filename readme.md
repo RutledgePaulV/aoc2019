@@ -12,28 +12,28 @@ See [defproblem](src/aoc2019/common.clj#L17)
 
 ### [d01-p1](src/aoc2019/day1.clj#L17)
 ```clojure
-{:t "206 microseconds, 140 nanoseconds"
+{:t "170 microseconds, 462 nanoseconds"
  :a 3291760}
 ```
 ---
 
 ### [d01-p2](src/aoc2019/day1.clj#L24)
 ```clojure
-{:t "124 microseconds, 774 nanoseconds"
+{:t "115 microseconds, 97 nanoseconds"
  :a 4934767}
 ```
 ---
 
-### [d02-p1](src/aoc2019/day2.clj#L31)
+### [d02-p1](src/aoc2019/day2.clj#L30)
 ```clojure
-{:t "115 microseconds, 130 nanoseconds"
+{:t "106 microseconds, 55 nanoseconds"
  :a 3760627}
 ```
 ---
 
-### [d02-p2](src/aoc2019/day2.clj#L34)
+### [d02-p2](src/aoc2019/day2.clj#L33)
 ```clojure
-{:t "99 milliseconds, 138 microseconds, 896 nanoseconds"
+{:t "35 milliseconds, 390 microseconds, 579 nanoseconds"
  :a 7195}
 ```
 ---
